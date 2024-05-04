@@ -1,6 +1,16 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/nvchad/base46/"
 vim.g.mapleader = " "
 
+if vim.fn.isdirectory(vim.fn.expand "%") == 1 then
+  vim.g.project_directory = vim.fn.expand "%"
+  vim.cmd.cd(vim.g.project_directory)
+  vim.cmd.bd()
+  local current_buffer = vim.api.nvim_get_current_buf()
+  vim.bo[current_buffer].readonly = true
+  vim.bo[current_buffer].modifiable = false
+  vim.bo[current_buffer].buflisted = false
+end
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
@@ -36,4 +46,5 @@ require "nvchad.autocmds"
 
 vim.schedule(function()
   require "mappings"
+  require "configs.terminal"
 end)
