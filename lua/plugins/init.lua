@@ -26,6 +26,15 @@ return {
         "prettier",
         "ruby-lsp",
         "rubocop",
+        "tailwindcss-language-server",
+        "htmlbeautifier",
+        "prettier",
+        "solargraph",
+        "typescript-language-server",
+        "yaml-language-server",
+        "yamllint",
+        "gopls",
+        "goimports",
       },
     },
   },
@@ -130,5 +139,18 @@ return {
       local opts = require "configs.cmp"
       require("cmp").setup(opts)
     end,
+  },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    cmd = { "CopilotChatToggle", "CopilotChat" },
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+    },
+    opts = {
+      debug = false, -- Enable debugging
+      auto_insert_mode = true,
+    },
   },
 }

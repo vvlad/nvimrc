@@ -1,18 +1,6 @@
 local options = {
   sync_root_with_cwd = false,
   prefer_startup_root = true,
-  on_attach = function(bufnr)
-    local api = require "nvim-tree.api"
-    vim.keymap.set("n", "<LeftRelease>", function()
-      local node = api.tree.get_node_under_cursor()
-
-      if node.nodes ~= nil then
-        api.node.open.edit()
-      end
-    end, {})
-
-    api.config.mappings.default_on_attach(bufnr)
-  end,
   filters = {
     dotfiles = true,
     git_ignored = true,
@@ -133,13 +121,6 @@ end
 local helpers = require "helpers"
 dofile(vim.g.base46_cache .. "nvimtree")
 local defaults = require "nvchad.configs.nvimtree"
-
--- vim.api.nvim_create_autocmd("User", {
---   pattern = "VeryLazy",
---   callback = open_project_root,
---   once = true,
--- })
---
 require("nvim-tree").setup(helpers.table_merge(defaults, options))
 
 if vim.g.project_directory then

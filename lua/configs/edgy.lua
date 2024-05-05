@@ -15,7 +15,7 @@ return {
   options = {
     bottom = { size = 0.3 },
     left = { size = 30 },
-    right = { size = 0.4 },
+    right = { size = 0.3 },
   },
   bottom = {
     "terminal",
@@ -25,6 +25,7 @@ return {
   },
   right = {
     "help",
+    "copilot-chat",
   },
   animate = {
     enabled = false,

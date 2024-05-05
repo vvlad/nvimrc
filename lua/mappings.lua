@@ -32,6 +32,10 @@ map({ "n", "i", "t" }, "<C-S-f>", function()
   require("telescope.builtin").live_grep()
 end)
 
+map({ "n", "i", "t" }, "<A-c>", function()
+  require("CopilotChat").toggle()
+end)
+
 for i = 1, 9, 1 do
   vim.keymap.set({ "n", "i" }, string.format("<A-%s>", i), function()
     pcall(vim.api.nvim_set_current_buf, vim.t.bufs[i])

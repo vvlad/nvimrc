@@ -59,3 +59,17 @@ vim.api.nvim_create_autocmd(
     command = "set filetype=yaml", -- Command to execute
   }
 )
+vim.api.nvim_create_autocmd(
+  { "BufNewFile", "BufRead", "BufReadPost" }, -- List of events
+  {
+    pattern = "*.text.erb", -- Applies to .twig files
+    command = "set filetype=text", -- Command to execute
+  }
+)
+vim.api.nvim_create_autocmd(
+  { "BufNewFile", "BufRead", "BufReadPost" }, -- List of events
+  {
+    pattern = "Guardfile", -- Applies to .twig files
+    command = "set filetype=ruby", -- Command to execute
+  }
+)
