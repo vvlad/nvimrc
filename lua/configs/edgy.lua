@@ -19,7 +19,7 @@ return {
   },
   bottom = {
     "terminal",
-    "qf"
+    "qf",
   },
   left = {
     "NvimTree",
@@ -27,6 +27,7 @@ return {
   right = {
     "help",
     "copilot-chat",
+    "neotest-summary",
   },
   animate = {
     enabled = false,

@@ -59,3 +59,23 @@ end)
 map({ "n", "i" }, "<C-.>", function()
   vim.lsp.buf.code_action()
 end)
+
+map({ "n", "v" }, "<leader>tt", function()
+  require("neotest").run.run()
+end, { desc = "Run nearest test" })
+
+map({ "n", "v" }, "<leader>tf", function()
+  require("neotest").run.run(vim.fn.expand "%")
+end, { desc = "Run test file" })
+
+map({ "n", "v" }, "<leader>ts", function()
+  require("neotest").run.run { suite = true }
+end, { desc = "Run all tests" })
+
+map({ "n", "v" }, "<leader>to", function()
+  require("neotest").summary.open()
+end, { desc = "Run all tests" })
+
+map({ "n", "v" }, "<leader>to", function()
+  require("neotest").summary.close()
+end, { desc = "Run all tests" })

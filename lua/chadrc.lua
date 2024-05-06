@@ -5,6 +5,7 @@
 local M = {}
 
 local api = vim.api
+local btn = require("nvchad.tabufline.utils").btn
 
 local function nvim_tree_width()
   for _, win in pairs(api.nvim_tabpage_list_wins(0)) do
@@ -15,6 +16,24 @@ local function nvim_tree_width()
   return 0
 end
 
+local function txt(str, hl)
+  str = str or ""
+  local a = "%#" .. hl .. "#" .. str
+  return a
+end
+
+local function btn(str, hl, func, arg)
+  str = hl and txt(str, hl) or str
+  arg = arg or ""
+  return "%" .. arg .. "@" .. func .. "@" .. str .. "%X"
+end
+
+vim.cmd [[
+function! NeoTestToggle(a,b,c,d)
+  lua require("neotest").summary.toggle()
+endfunction
+]]
+
 M.ui = {
   theme = "vscode_dark",
 
@@ -24,13 +43,17 @@ M.ui = {
 
   tabufline = {
     lazyload = false,
-    order = { "title", "buffers", "tabs", "btns" },
+    order = { "title", "buffers", "tabs", "tests", "btns" },
     modules = {
       title = function()
         local title = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
         local len = nvim_tree_width()
         title = "  " .. title .. string.rep(" ", nvim_tree_width())
         return "%#NvimTreeRootFolder#" .. string.sub(title, 1, len)
+      end,
+      tests = function()
+        local runall = btn(" 󱇯 ", "DiagnosticHint", "NeoTestToggle")
+        return runall
       end,
     },
   },

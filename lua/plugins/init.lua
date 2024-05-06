@@ -77,6 +77,7 @@ return {
       telescope.load_extension "fzf"
     end,
   },
+
   {
     "zbirenbaum/copilot.lua",
     event = "InsertEnter",
@@ -103,6 +104,7 @@ return {
       },
     },
   },
+
   {
     "zbirenbaum/copilot-cmp",
     config = function()
@@ -112,6 +114,7 @@ return {
       }
     end,
   },
+
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -123,6 +126,7 @@ return {
       require("cmp").setup(opts)
     end,
   },
+
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     branch = "canary",
@@ -136,11 +140,29 @@ return {
       auto_insert_mode = true,
     },
   },
+
   {
     "MunifTanjim/nui.nvim",
     event = { "InsertEnter", "LspAttach" },
     config = function()
       require "helpers.ui-select"
+    end,
+  },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-neotest/neotest-go",
+      "zidhuss/neotest-minitest",
+      "nvim-neotest/neotest-plenary",
+    },
+    lazy = true,
+    config = function()
+      require "configs.neotest"
     end,
   },
 }
