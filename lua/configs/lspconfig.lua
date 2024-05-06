@@ -7,7 +7,7 @@ local function ensure_cspell_json(path)
 end
 
 local function cspell_config_path(cwd)
-  if vim.fn.isdirectory(vim.g.project_root .. "/.nvim") == 1 then
+  if vim.g.project_root and vim.fn.isdirectory(vim.g.project_root .. "/.nvim") == 1 then
     return ensure_cspell_json(vim.g.project_root .. "/.nvim/cspell.json")
   end
   if vim.fn.isdirectory(cwd .. "/.nvim") == 1 then

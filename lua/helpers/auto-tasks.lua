@@ -1,4 +1,8 @@
 local root = vim.g.project_directory
+if not root then
+  return
+end
+
 local auto_tasks_path = root .. "/.nvim/auto-tasks.lua"
 
 if vim.fn.filereadable(auto_tasks_path) == 0 then
