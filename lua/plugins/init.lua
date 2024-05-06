@@ -9,34 +9,15 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    config = function()
-      require("nvchad.configs.lspconfig").defaults()
-      require "configs.lspconfig"
-    end,
-  },
-
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "lua-language-server",
-        "stylua",
-        "html-lsp",
-        "css-lsp",
-        "prettier",
-        "ruby-lsp",
-        "rubocop",
-        "tailwindcss-language-server",
-        "htmlbeautifier",
-        "prettier",
-        "solargraph",
-        "typescript-language-server",
-        "yaml-language-server",
-        "yamllint",
-        "gopls",
-        "goimports",
-      },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "nvimtools/none-ls.nvim",
+      "davidmh/cspell.nvim",
     },
+    config = function()
+      require("helpers.lspconfig").setup()
+    end,
   },
 
   {
@@ -83,9 +64,10 @@ return {
       return require "nvchad.configs.telescope"
     end,
     config = function(_, opts)
+      local helpers = require "helpers"
       dofile(vim.g.base46_cache .. "telescope")
       local telescope = require "telescope"
-      telescope.setup(opts)
+      telescope.setup(helpers.table.merge(opts, {}))
 
       -- load extensions
       for _, ext in ipairs(opts.extensions_list) do
@@ -137,6 +119,7 @@ return {
     },
     config = function()
       local opts = require "configs.cmp"
+      ---@diagnostic disable-next-line: different-requires
       require("cmp").setup(opts)
     end,
   },
@@ -145,12 +128,19 @@ return {
     branch = "canary",
     cmd = { "CopilotChatToggle", "CopilotChat" },
     dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
     },
     opts = {
       debug = false, -- Enable debugging
       auto_insert_mode = true,
     },
+  },
+  {
+    "MunifTanjim/nui.nvim",
+    event = { "InsertEnter", "LspAttach" },
+    config = function()
+      require "helpers.ui-select"
+    end,
   },
 }

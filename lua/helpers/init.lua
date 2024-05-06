@@ -55,7 +55,9 @@ local function table_merge(...)
   return result
 end
 
-M.table_merge = table_merge
-M.table_clone = table_clone
+M.table = {
+  clone = table_clone,
+  merge = table_merge,
+}
 
 return M

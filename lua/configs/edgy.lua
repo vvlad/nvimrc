@@ -19,6 +19,7 @@ return {
   },
   bottom = {
     "terminal",
+    "qf"
   },
   left = {
     "NvimTree",
@@ -35,6 +36,9 @@ return {
   },
   keys = {
     ["<ESC>"] = function(win)
+      if vim.bo.buftype == "NvimTree" then
+        return
+      end
       win:close()
     end,
   },

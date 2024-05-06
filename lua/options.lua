@@ -26,10 +26,6 @@ o.incsearch = true
 o.hidden = true
 o.colorcolumn = "120"
 
--- vim.opt.backupdir = "~/.vim/backup/"
--- vim.opt.directory = "~/.vim/swap/"
--- vim.opt.undodir = "~/.vim/undo/"
-
 if g.neovide then
   o.guifont = "JetBrainsMonoNL Nerd Font Mono:h11"
 
@@ -53,23 +49,31 @@ if g.neovide then
 end
 
 vim.api.nvim_create_autocmd(
-  { "BufNewFile", "BufRead", "BufReadPost" }, -- List of events
+  { "BufNewFile", "BufRead", "BufReadPost" },
   {
-    pattern = "*.yaml.erb", -- Applies to .twig files
-    command = "set filetype=yaml", -- Command to execute
+    pattern = "*.yaml.erb",
+    command = "set filetype=yaml",
   }
 )
 vim.api.nvim_create_autocmd(
-  { "BufNewFile", "BufRead", "BufReadPost" }, -- List of events
+  { "BufNewFile", "BufRead", "BufReadPost" },
   {
-    pattern = "*.text.erb", -- Applies to .twig files
-    command = "set filetype=text", -- Command to execute
+    pattern = "*.text.erb",
+    command = "set filetype=text",
   }
 )
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = ".gitlab*",
+  callback = function()
+    vim.bo.filetype = "yaml.gitlab"
+  end,
+})
+
 vim.api.nvim_create_autocmd(
-  { "BufNewFile", "BufRead", "BufReadPost" }, -- List of events
+  { "BufNewFile", "BufRead", "BufReadPost" },
   {
-    pattern = "Guardfile", -- Applies to .twig files
-    command = "set filetype=ruby", -- Command to execute
+    pattern = "Guardfile",
+    command = "set filetype=ruby",
   }
 )

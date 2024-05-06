@@ -21,8 +21,8 @@ map("n", "<A-Right>", "<C-w>l")
 map("i", "<A-Right>", "<ESC><C-w>l")
 map("t", "<A-Right>", "<C-\\><C-n><C-w>l")
 
-vim.api.nvim_set_keymap("t", "<C-S-V>", '<C-\\><C-n>"+p<CR>i', { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-V>", "<C-R>+", { noremap = true })
+map("t", "<C-S-V>", '<C-\\><C-n>"+p<CR>i', { noremap = true })
+map("i", "<C-V>", "<C-R>+", { noremap = true })
 
 map({ "n", "i", "t" }, "<C-p>", function()
   require("telescope.builtin").find_files()
@@ -36,29 +36,26 @@ map({ "n", "i", "t" }, "<A-c>", function()
   require("CopilotChat").toggle()
 end)
 
+-- Terminal mappings
 for i = 1, 9, 1 do
   vim.keymap.set({ "n", "i" }, string.format("<A-%s>", i), function()
     pcall(vim.api.nvim_set_current_buf, vim.t.bufs[i])
   end)
 end
 
-local api = vim.api
-local g = vim.g
-local term = require "nvchad.term"
-
-local function toggle_term(id)
-  for _, opts in pairs(g.nvchad_terms) do
-    pcall(api.nvim_win_close, opts.win, true)
-  end
-
-  term.toggle { id = tostring(id), pos = "sp" }
-end
+local term = require "helpers.terminal"
 
 for i = 1, 9, 1 do
-  vim.keymap.set({ "t" }, string.format("<A-%s>", i), function()
-    toggle_term(i)
+  map({ "t" }, string.format("<A-%s>", i), function()
+    term.toggle(i)
   end)
 end
+
 map({ "i", "n" }, "<C-\\>", function()
-  toggle_term(1)
+  term.toggle(1)
+end)
+
+-- LSP mappings
+map({ "n", "i" }, "<C-.>", function()
+  vim.lsp.buf.code_action()
 end)

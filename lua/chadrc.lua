@@ -16,7 +16,7 @@ local function nvim_tree_width()
 end
 
 M.ui = {
-  theme = "kanagawa",
+  theme = "vscode_dark",
 
   cmp = {
     style = "flat_dark",
@@ -44,7 +44,7 @@ M.ui = {
   },
 
   nvdash = {
-    load_on_startup = true,
+    load_on_startup = false,
     header = { "                                            " },
 
     buttons = {

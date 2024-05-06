@@ -121,7 +121,7 @@ end
 local helpers = require "helpers"
 dofile(vim.g.base46_cache .. "nvimtree")
 local defaults = require "nvchad.configs.nvimtree"
-require("nvim-tree").setup(helpers.table_merge(defaults, options))
+require("nvim-tree").setup(helpers.table.merge(defaults, options))
 
 if vim.g.project_directory then
   open_project_root(vim.g.project_directory)

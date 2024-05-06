@@ -47,4 +47,5 @@ require "nvchad.autocmds"
 vim.schedule(function()
   require "mappings"
   require "configs.terminal"
+  require "helpers.auto-tasks"
 end)
