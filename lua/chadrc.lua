@@ -35,7 +35,7 @@ endfunction
 ]]
 
 vim.api.nvim_create_user_command("NeoTestToggle", function()
-  require("neotest").summary.toggle()
+  pcall(require("neotest").summary.toggle)
 end, { nargs = 0 })
 vim.api.nvim_create_user_command("NeoTestRunAll", function()
   require("neotest").run.run { suite = true }
@@ -43,6 +43,11 @@ end, { nargs = 0 })
 
 M.ui = {
   theme = "vscode_dark",
+
+  theme_toggle = {
+    "vscode_dark",
+    "flexoki-light",
+  },
 
   cmp = {
     style = "flat_dark",
@@ -74,18 +79,17 @@ M.ui = {
   },
 
   nvdash = {
-    load_on_startup = vim.g.project_directory or false,
+    load_on_startup = false, -- vim.g.project_directory or false,
     header = { "                                            " },
 
     buttons = {
       { "  Find File", "", "Telescope find_files" },
       { "󰈚  Recent Files", "", "Telescope oldfiles" },
       {
-        "󱇯  Run test suite",
+        "󱇯  Test Suite",
         "",
         function()
-          require("neotest").run.run { suite = true }
-          require("neotest").summary.open()
+          require("neotest").summary.toggle()
         end,
       },
       { "󰈭  Find Word", "", "Telescope live_grep" },

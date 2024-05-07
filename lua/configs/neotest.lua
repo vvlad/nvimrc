@@ -15,5 +15,3 @@ require("neotest").setup {
     require "neotest-minitest",
   },
 }
-
-local map = vim.keymap.set

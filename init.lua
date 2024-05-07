@@ -48,4 +48,5 @@ vim.schedule(function()
   require "mappings"
   require "configs.terminal"
   require "helpers.auto-tasks"
+  require "helpers.project"
 end)

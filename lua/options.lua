@@ -48,20 +48,14 @@ if g.neovide then
   end, { noremap = true, silent = true })
 end
 
-vim.api.nvim_create_autocmd(
-  { "BufNewFile", "BufRead", "BufReadPost" },
-  {
-    pattern = "*.yaml.erb",
-    command = "set filetype=yaml",
-  }
-)
-vim.api.nvim_create_autocmd(
-  { "BufNewFile", "BufRead", "BufReadPost" },
-  {
-    pattern = "*.text.erb",
-    command = "set filetype=text",
-  }
-)
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "BufReadPost" }, {
+  pattern = "*.yaml.erb",
+  command = "set filetype=yaml",
+})
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "BufReadPost" }, {
+  pattern = "*.text.erb",
+  command = "set filetype=text",
+})
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = ".gitlab*",
@@ -70,10 +64,25 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd(
-  { "BufNewFile", "BufRead", "BufReadPost" },
-  {
-    pattern = "Guardfile",
-    command = "set filetype=ruby",
-  }
-)
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "BufReadPost" }, {
+  pattern = "Guardfile",
+  command = "set filetype=ruby",
+})
+
+-- restore cursor position
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    local line = vim.fn.line "'\""
+    if
+      line > 1
+      and line <= vim.fn.line "$"
+      and vim.bo.filetype ~= "commit"
+      and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
+    then
+      vim.cmd 'normal! g`"'
+    end
+  end,
+})
