@@ -7,7 +7,6 @@ local options = {
     custom = {
       "^log$",
       "^tmp$",
-      "^db$",
       "*-lock.json",
       "*.lock",
       "*.lockb",
@@ -18,6 +17,7 @@ local options = {
       ".gitignore",
       ".gitlab-ci.yml",
       ".dockerignore",
+      "secrets.ejson",
     },
   },
 

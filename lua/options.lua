@@ -49,9 +49,20 @@ if g.neovide then
 end
 
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "BufReadPost" }, {
+  pattern = "*.yml.erb",
+  command = "set filetype=yaml",
+})
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "BufReadPost" }, {
   pattern = "*.yaml.erb",
   command = "set filetype=yaml",
 })
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "BufReadPost" }, {
+  pattern = "*.ejson",
+  command = "set filetype=json",
+})
+
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "BufReadPost" }, {
   pattern = "*.text.erb",
   command = "set filetype=text",
