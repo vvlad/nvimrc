@@ -1,9 +1,9 @@
 local M = {}
-local g = vim.g
 local map = vim.keymap.set
+local project = require "helpers.project"
 
 M.available = function()
-  if not g.project_directory then
+  if not project.root then
     return false
   end
 
@@ -11,11 +11,11 @@ M.available = function()
 end
 
 M.auto_tasks_path = function()
-  if not g.project_directory then
+  if not project.root then
     return
   end
 
-  local auto_tasks_path = g.project_directory .. "/.nvim/auto-tasks.lua"
+  local auto_tasks_path = project.root .. "/.nvim/auto-tasks.lua"
   if vim.fn.filereadable(auto_tasks_path) == 0 then
     return
   end

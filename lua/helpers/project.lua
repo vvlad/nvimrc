@@ -1,28 +1,30 @@
--- local g = vim.g
--- if not g.nvdash_shown then
---   g.nvdash_shown = true
---   if g.project_directory then
---     vim.defer_fn(function()
---       require("nvchad.nvdash").open()
---     end, 350)
---   end
--- end
 local M = {}
-local g = vim.g
-local auto_tasks = require "helpers.auto-tasks"
-local editor = require "edgy.editor"
 
-M.is_project = function()
-  return g.project_directory ~= nil
+M.root = nil
+
+M.setup = function()
+  local path = vim.fn.expand "%"
+  if vim.fn.isdirectory(path) == 1 then
+    M.root = path
+    vim.cmd.cd(path)
+    vim.cmd.bd()
+    vim.bo.readonly = true
+    vim.bo.modifiable = false
+    vim.bo.buflisted = false
+  end
 end
 
-local function open_project_root(file)
+M.is_project = function()
+  return M.root ~= nil
+end
+
+local function initialize_nvimtree()
   local lspconfig = require "lspconfig"
-  local directory = lspconfig.util.find_git_ancestor(file)
+  local directory = lspconfig.util.find_git_ancestor(M.root)
 
   if not directory then
-    if vim.fn.isdirectory(file) == 1 then
-      directory = file
+    if vim.fn.isdirectory(M.root) == 1 then
+      directory = M.root
     else
       return
     end
@@ -35,22 +37,21 @@ local function open_project_root(file)
     current_window = false,
     focus = false,
   }
-
-  vim.defer_fn(function()
-    vim.cmd "wincmd l"
-  end, 150)
 end
 
-if M.is_project() and not g.project_initialized then
-  g.project_initialized = true
+M.initialize = function()
+  if M.root ~= nil then
+    initialize_nvimtree()
 
-  open_project_root(vim.g.project_directory)
-  vim.defer_fn(function()
-    auto_tasks.start()
-    editor.goto_main()
-    vim.cmd.wincmd "k"
-    require("nvchad.nvdash").open()
-    --    vim.cmd.wincmd "k"
-    vim.cmd.stopinsert()
-  end, 350)
+    local auto_tasks = require "helpers.auto-tasks"
+
+    vim.defer_fn(function()
+      auto_tasks.start()
+      vim.cmd.wincmd "k"
+      vim.cmd.stopinsert()
+      require("nvchad.nvdash").open()
+    end, 350)
+  end
 end
+
+return M
