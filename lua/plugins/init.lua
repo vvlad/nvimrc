@@ -3,7 +3,7 @@ return {
     "stevearc/conform.nvim",
     event = "BufWritePre",
     config = function()
-      require "configs.conform"
+      require("conform").setup(require "configs.conform")
     end,
   },
 
@@ -22,7 +22,9 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = require "configs.treesitter",
+    opts = function()
+      require "configs.treesitter"
+    end,
   },
 
   {
@@ -32,9 +34,8 @@ return {
       vim.opt.splitkeep = "topline"
       vim.opt.cmdheight = 0
     end,
-    config = function()
-      local opts = require "configs.edgy"
-      require("edgy").setup(opts)
+    opts = function()
+      return require "configs.edgy"
     end,
   },
 
@@ -45,8 +46,8 @@ return {
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
     end,
-    config = function()
-      require "configs.nvimtree"
+    opts = function()
+      return require "configs.nvimtree"
     end,
   },
 
@@ -61,15 +62,13 @@ return {
     },
     cmd = "Telescope",
     opts = function()
-      return require "nvchad.configs.telescope"
+      return require "configs.telescope"
     end,
     config = function(_, opts)
       local helpers = require "helpers"
       dofile(vim.g.base46_cache .. "telescope")
       local telescope = require "telescope"
       telescope.setup(helpers.table.merge(opts, {}))
-
-      -- load extensions
       for _, ext in ipairs(opts.extensions_list) do
         telescope.load_extension(ext)
       end
@@ -107,23 +106,18 @@ return {
 
   {
     "zbirenbaum/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup {
-        event = { "InsertEnter", "LspAttach" },
-        fix_pairs = true,
-      }
-    end,
+    opts = {
+      event = { "InsertEnter", "LspAttach" },
+      fix_pairs = true,
+    },
   },
-
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
       "onsails/lspkind.nvim",
     },
-    config = function()
-      local opts = require "configs.cmp"
-      ---@diagnostic disable-next-line: different-requires
-      require("cmp").setup(opts)
+    opts = function()
+      return require "configs.cmp"
     end,
   },
 
@@ -156,13 +150,16 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "nvim-neotest/neotest-go",
       "zidhuss/neotest-minitest",
       "nvim-neotest/neotest-plenary",
     },
     lazy = true,
-    config = function()
-      require "configs.neotest"
+    opts = function()
+      return require "configs.neotest"
     end,
+  },
+  {
+    "folke/which-key.nvim",
+    enabled = false,
   },
 }

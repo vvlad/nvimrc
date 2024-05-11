@@ -5,7 +5,6 @@
 local M = {}
 
 local api = vim.api
-local btn = require("nvchad.tabufline.utils").btn
 
 local function nvim_tree_width()
   for _, win in pairs(api.nvim_tabpage_list_wins(0)) do

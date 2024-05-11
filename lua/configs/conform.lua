@@ -5,7 +5,6 @@ local options = {
     html = { "htmlbeautifier" },
     css = { { "prettierd", "prettier" } },
     scss = { { "prettierd", "prettier" } },
-    -- ruby = { "rubocop" },
   },
 
   format_on_save = {
@@ -14,4 +13,4 @@ local options = {
   },
 }
 
-require("conform").setup(options)
+return options

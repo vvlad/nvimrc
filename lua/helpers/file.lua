@@ -30,24 +30,26 @@ end
 M.edit = function(path, focus)
   local actions = require "nvim-tree.actions"
   local win = usable_win_ids()
+  local editor = require "edgy.editor"
   if vim.fn.isdirectory(path) == 1 then
     actions.finders.find_file.fn(path)
+    editor.goto_main()
     return
   end
   actions.node.open_file.fn("", path)
+  editor.goto_main()
 
-  local buf = vim.api.nvim_get_current_buf()
-  if #win == 0 then
-    vim.api.nvim_command "vnew"
-    vim.cmd.edit(path)
-  else
-    vim.api.nvim_set_current_win(win[1])
-    vim.api.nvim_win_set_buf(win[1], buf)
-  end
+  -- local buf = vim.api.nvim_get_current_buf()
+  -- if #win == 0 then
+  --   vim.api.nvim_command "vnew"
+  --   vim.cmd.edit(path)
+  -- else
+  --   vim.api.nvim_set_current_win(win[1])
+  --   vim.api.nvim_win_set_buf(win[1], buf)
+  -- end
 
   if focus and vim.g.neovide then
-    vim.api.nvim_err_write("Request focus")
-    vim.cmd [[NeovideFocus]] 
+    vim.cmd [[NeovideFocus]]
   end
 end
 

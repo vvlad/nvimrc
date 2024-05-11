@@ -1,6 +1,10 @@
+local helpers = require "helpers"
+local defaults = require "nvchad.configs.nvimtree"
+
 local options = {
   sync_root_with_cwd = false,
   prefer_startup_root = true,
+  on_attach = function() end,
   filters = {
     dotfiles = true,
     git_ignored = true,
@@ -93,36 +97,6 @@ local options = {
   },
 }
 
-local function open_project_root(file)
-  local lspconfig = require "lspconfig"
-  local directory = lspconfig.util.find_git_ancestor(file)
-
-  if not directory then
-    if vim.fn.isdirectory(file) == 1 then
-      directory = file
-    else
-      return
-    end
-  end
-
-  vim.cmd.cd(directory)
-
-  require("nvim-tree.api").tree.open {
-    path = vim.g.project_directory,
-    current_window = false,
-    focus = false,
-  }
-
-  vim.defer_fn(function()
-    vim.cmd "wincmd l"
-  end, 150)
-end
-
-local helpers = require "helpers"
 dofile(vim.g.base46_cache .. "nvimtree")
-local defaults = require "nvchad.configs.nvimtree"
-require("nvim-tree").setup(helpers.table.merge(defaults, options))
 
-if vim.g.project_directory then
-  open_project_root(vim.g.project_directory)
-end
+return helpers.table.merge(defaults, options)

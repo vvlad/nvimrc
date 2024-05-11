@@ -8,10 +8,12 @@ vim.diagnostic.config({
   },
 }, neotest_ns)
 
-require("neotest").setup {
+local options = {
   adapters = {
     require "neotest-plenary",
     require "neotest-go",
     require "neotest-minitest",
   },
 }
+
+return options

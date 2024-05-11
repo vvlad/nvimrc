@@ -1,4 +1,4 @@
-return {
+local options = {
   sync_install = false,
   auto_install = true,
   highlight = {
@@ -28,3 +28,5 @@ return {
     "javascript",
   },
 }
+
+return options

@@ -1,16 +1,4 @@
-local function fix_term_highlight()
-  local win = vim.api.nvim_get_current_win()
-  vim.wo[win].winhighlight = "Normal:Normal"
-end
-
-vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
-  pattern = "term://*",
-  callback = function()
-    vim.defer_fn(fix_term_highlight, 5)
-  end,
-})
-
-return {
+local options = {
   close_when_all_hidden = false,
   options = {
     bottom = { size = 0.3 },
@@ -37,10 +25,12 @@ return {
   },
   keys = {
     ["<ESC>"] = function(win)
-      if vim.bo.buftype == "NvimTree" then
+      if vim.bo.filetype == "NvimTree" then
         return
       end
       win:close()
     end,
   },
 }
+
+return options
