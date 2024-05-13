@@ -1,5 +1,5 @@
 local M = {}
-
+local tabufline = require "nvchad.tabufline.utils"
 local mode = {
   normal = "n",
   visual = "v",
@@ -48,6 +48,14 @@ M.terminal = function(mappings)
   })
 end
 
+M.btn = function(str, hl, func, arg)
+  str = hl and M.txt(str, hl) or str
+  arg = arg or ""
+  return "%" .. arg .. "@" .. func .. "@" .. str .. "%X"
+end
+
+-- tabufline.btn = M.btn
+
 M.move_next_word = function()
   vim.cmd [[normal! w]]
 end
@@ -94,6 +102,23 @@ M.switch_to_right = function()
 end
 
 M.paste_from_clipboard = function()
+  local current_buffer = vim.api.nvim_get_current_buf()
+  local action_state = require "telescope.actions.state"
+
+  if vim.bo.filetype == "TelescopePrompt" then
+    local current_picker = action_state.get_current_picker(current_buffer)
+    local text = vim.fn.getreg("+"):gsub("\n", "\\n")
+    current_picker:set_prompt(text, false)
+    return
+  end
+
+  if vim.bo.buftype == "terminal" then
+    local clipboard_contents = vim.fn.getreg "+"
+    local chan_id = vim.api.nvim_buf_get_var(current_buffer, "terminal_job_id")
+    vim.fn.chansend(chan_id, clipboard_contents)
+    return
+  end
+
   vim.cmd [[normal! "+p]]
 end
 
