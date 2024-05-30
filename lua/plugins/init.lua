@@ -111,6 +111,7 @@ return {
       fix_pairs = true,
     },
   },
+
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
@@ -158,6 +159,7 @@ return {
       return require "configs.neotest"
     end,
   },
+
   {
     "folke/which-key.nvim",
     enabled = false,

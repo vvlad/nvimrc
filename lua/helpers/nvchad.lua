@@ -16,6 +16,8 @@ function! NeoTestToggle()
 endfunction
 ]]
 
+vim.cmd "function! TbGoToBuf(bufnr,b,c,d) \n lua require('edgy.editor').goto_main()\nexecute 'b'..a:bufnr \n endfunction"
+
 M.title = function()
   local title = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
   local len = nvim_tree_width()

@@ -77,6 +77,11 @@ end
 M.remove_file = function()
   local api = require "nvim-tree.api"
   api.fs.remove()
+
+  if #vim.t.bufs == 0 then
+    require("edgy.editor").goto_main()
+    vim.cmd.enew()
+  end
 end
 
 M.create_file = function()

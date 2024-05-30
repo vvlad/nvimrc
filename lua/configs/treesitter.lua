@@ -26,6 +26,8 @@ local options = {
     "css",
     "ruby",
     "javascript",
+    "hcl",
+    "terraform",
   },
 }
 

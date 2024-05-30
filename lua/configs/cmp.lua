@@ -1,5 +1,6 @@
 local options = require "nvchad.configs.cmp"
 local lspkind = require "lspkind"
+
 lspkind.init {
   symbol_map = {
     Copilot = "",

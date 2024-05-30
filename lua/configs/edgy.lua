@@ -3,10 +3,15 @@ local options = {
   options = {
     bottom = { size = 0.3 },
     left = { size = 30 },
-    right = { size = 0.3 },
+    right = { size = 0.4 },
   },
   bottom = {
-    "terminal",
+    {
+      ft = "terminal",
+      filter = function(buf)
+        return vim.bo[buf].buftype == "terminal"
+      end
+    },
     "qf",
   },
   left = {

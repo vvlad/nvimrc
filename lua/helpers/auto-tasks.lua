@@ -22,6 +22,8 @@ M.auto_tasks_path = function()
   return auto_tasks_path
 end
 
+local logger = require("helpers.logger")
+
 M.project_tasks = function()
   local auto_tasks_path = M.auto_tasks_path()
   if not auto_tasks_path then
@@ -38,7 +40,7 @@ M.project_tasks = function()
     if type(task) == "string" then
       task = { cmd = task }
     end
-    task.id = "auto-task-" .. tostring(#defined + 1)
+    task.id = tostring(#defined + 1)
     task.map = task.map or string.format("<A-%s>", #defined + 1)
     table.insert(defined, task)
   end
@@ -49,6 +51,7 @@ end
 M.start = function()
   local term = require "helpers.terminal"
   for _, task in pairs(M.project_tasks()) do
+    logger.debug("Auto task: " .. vim.inspect(task))
     map({ "t" }, task.map, function()
       term.toggle(task.id, { cmd = task.cmd })
     end)

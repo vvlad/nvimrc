@@ -25,3 +25,7 @@ Add ~/.local/bin/e to the $PATH enviroment variable
    - otherwise the address of the directory of the provided argument will be used
 3. If the connection to the unix address is established then the path that was passed will be opened in that nvim instance
 4. otherwise a new neovide instance is launched for the associated address
+
+## References
+
+Nvim Events - https://gist.github.com/dtr2300/2f867c2b6c051e946ef23f92bd9d1180

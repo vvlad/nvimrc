@@ -1,5 +1,4 @@
 local M = {}
-local logger = require "helpers.logger"
 local helpers = require "helpers"
 
 M.setup = function(opts)

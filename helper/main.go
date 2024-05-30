@@ -28,7 +28,7 @@ func main() {
 	address := lookupServerAddress(path)
 	v, err := nvim.Dial(address)
 	if err != nil {
-		err := exec.Command("neovide", os.Args[1], "--", "--listen", address).Run()
+		err := exec.Command("neovide", os.Args[1], "--", "--listen", address).Start()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
